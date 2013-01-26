@@ -1,4 +1,4 @@
-
+﻿
 package{
 
 	import flash.media.*;
@@ -9,9 +9,9 @@ public class SoundManager {
 
 	
 	public var biblio=[
-		{lbl:"one",src:s716},
-		{lbl:"two",src:s714},
-		{lbl:"three",src:s715}
+	//	{lbl:"one",src:s716},
+	//	{lbl:"two",src:s714},
+	//	{lbl:"three",src:s715}
 		];
 	public var sounds;
 	

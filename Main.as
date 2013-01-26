@@ -45,7 +45,7 @@ public class Main extends MovieClip{
 						return false;				// return false -> the movement wil be canceled
 					}
 				},
-				{ 	zone : new tableau1_walls(),
+				{ 	zone : new MovieClip(),
 					event : "enter",
 					inner : false,
 					action : function( bob ){
@@ -99,7 +99,7 @@ public class Main extends MovieClip{
 						return false;				// return false -> the movement wil be canceled
 					}
 				},
-				{ 	zone : new tableau1_walls(),
+				{ 	zone : new MovieClip(),
 					event : "enter",
 					inner : false,
 					action : function( bob ){
@@ -108,7 +108,7 @@ public class Main extends MovieClip{
 						return true;	// return true -> the movement will not be canceled
 					}
 				},
-				{ 	zone : new tableau1_walls(),
+				{ 	zone : new MovieClip(),
 					event : "exit",
 					inner : false,
 					action : function( bob ){
