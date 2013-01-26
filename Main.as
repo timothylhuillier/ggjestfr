@@ -38,12 +38,12 @@ public class Main extends MovieClip{
 				bob.y=h/2;
 				
 				var collisions=[
-				{ 	zone : new tableau1_walls,
+				{ 	zone : new MovieClip(),
 					action : function( bob ){
 						return false;
 					}
 				},
-				{ 	zone : new tableau1_exit,
+				{ 	zone : new MovieClip(),
 					action : function( bob ){
 						
 						return true;
