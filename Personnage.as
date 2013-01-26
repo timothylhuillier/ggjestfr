@@ -8,9 +8,9 @@
 		
 		public var direction=0; 		//vecteur directeur
 		public var velocity=0;
-		public var friction=0.8;
+		public var friction=0.9;
 		public var acceleration=3;
-		public var velocityCap=10;
+		public var velocityCap=13;
 		
 		public function Personnage() {
 			updateAnimation('east', true);
@@ -33,6 +33,7 @@
 			this.gotoAndStop(lbl);
 		}
 		public function impulse(dir){
+		
 			this.direction.x= this.direction.x*velocity + dir.x*acceleration;
 			this.direction.y= this.direction.y*velocity + dir.y*acceleration;
 			
@@ -44,8 +45,6 @@
 			this.velocity=Math.min( l , velocityCap );
 		}
 		public function move(e){
-			
-			
 			
 			this.velocity*=friction;
 			

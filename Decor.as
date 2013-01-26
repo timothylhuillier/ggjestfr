@@ -24,8 +24,18 @@ public class Decor extends MovieClip{
 		var i=collisions.length
 		var accepteMove=true;
 		while(i--){
-			if( collisions[i].zone.hitTestObject(motif) && !collisions[i].action( motif ) )
-				accepteMove=false;
+			if( collisions[i].zone.hitTestPoint(motif.x,motif.y,true ) ){
+				if( collisions[i].event=="move" )
+					accepteMove=collisions[i].action( motif );
+				
+				if(!collisions[i].inner && collisions[i].event=="enter")
+					accepteMove=collisions[i].action( motif );
+				collisions[i].inner=true;
+			}else{
+				if(collisions[i].inner && collisions[i].event=="exit")
+					accepteMove=collisions[i].action( motif );
+				collisions[i].inner=false;
+			}
 		}
 		return accepteMove;
 	}

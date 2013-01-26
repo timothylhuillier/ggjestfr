@@ -38,15 +38,21 @@ public class Main extends MovieClip{
 				bob.y=h/2;
 				
 				var collisions=[
-				{ 	zone : new MovieClip(),
+				{ 	zone : new MovieClip(),			// zone as a sprite
+					event : "move",					// the event, "move" , "enter" or "exit"
+					inner : false,					// always initialise at false
 					action : function( bob ){
-						return false;
+						return false;				// return false -> the movement wil be canceled
 					}
 				},
 				{ 	zone : new MovieClip(),
+					event : "enter",
+					inner : false,
 					action : function( bob ){
-						
 						return true;
+						trace("on");
+						nextTableau();
+						return true;	// return true -> the movement will not be canceled
 					}
 				}];
 				
@@ -66,9 +72,69 @@ public class Main extends MovieClip{
 				
 			},
 			finish:function(){
-				stock.bob.remove();
-				stock.decor.remove();
+				stock.bob.parent.removeChild( stock.bob );
+				stock.decor.parent.removeChild( stock.decor );
+				stock.bob=null;
+				stock.decor=null;
 				
+			}
+			
+		},
+		
+		{
+			lbl:"walking on the wood",
+			prepare:function(){
+			
+				var bob=new Bob();
+				bob.x=w/2;
+				bob.y=h/2;
+				
+				var sm = new SoundManager();
+				
+				var collisions=[
+				{ 	zone : new MovieClip(),			// zone as a sprite
+					event : "move",					// the event, "move" , "enter" or "exit"
+					inner : false,					// always initialise at false
+					action : function( bob ){
+						return false;				// return false -> the movement wil be canceled
+					}
+				},
+				{ 	zone : new MovieClip(),
+					event : "enter",
+					inner : false,
+					action : function( bob ){
+						trace("on");
+						sm.fade("two" , 1);
+						return true;	// return true -> the movement will not be canceled
+					}
+				},
+				{ 	zone : new MovieClip(),
+					event : "exit",
+					inner : false,
+					action : function( bob ){
+						trace("on");
+						sm.fade("two" ,0);
+						return true;	// return true -> the movement will not be canceled
+					}
+				}
+				];
+				
+				var decor=new Decor( collisions , new MovieClip()  );
+				
+				addChild( bob );
+				addChild( decor );
+				
+				stock.decor=decor;
+				stock.bob=bob;
+				
+				Main.main.decor=decor;
+				
+			},
+			finish:function(){
+				stock.bob.parent.removeChild( stock.bob );
+				stock.decor.parent.removeChild( stock.decor );
+				stock.bob=null;
+				stock.decor=null;
 				
 			}
 		}
