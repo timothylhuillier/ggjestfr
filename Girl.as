@@ -17,16 +17,29 @@ package{
 	
 public class Girl extends Personnage{
 
-	
-	public static var main;
-	public var decor;
-
+	public var follow=false;
+	public var Jim;
+	public var attachement=100;
+	public var lbl;
 	public function Girl(){
 		super();
 		var a=Math.random()*Math.PI;
 		this.direction={x:Math.cos(a),y:Math.sin(a)};
 	}
-	
+	override public function move(e){
+			
+		if(follow){
+			var ab={x:this.x-Jim.x+Main.main.decor.x,y:this.y-Jim.y+Main.main.decor.y};
+			var l=Math.sqrt(ab.x*ab.x+ab.y*ab.y);
+			
+			if( l > attachement ){
+				this.x-=ab.x/l*(l - attachement);
+				this.y-=ab.y/l*(l - attachement);
+			}
+		}
+			
+		//got a wallhack
+	}
 }
 	
 	

@@ -9,9 +9,9 @@ public class SoundManager {
 
 	
 	public var biblio=[
-	//	{lbl:"one",src:s716},
-	//	{lbl:"two",src:s714},
-	//	{lbl:"three",src:s715}
+		{lbl:"main",src:Musique_scene_2_coeur},
+		{lbl:"two",src:Musique_scene_2_femmenormale},
+		{lbl:"one",src:Musique_scene_2_petasse}
 		];
 	public var sounds;
 	
@@ -27,7 +27,8 @@ public class SoundManager {
 			var s = new biblio[i].src();
 			var canal=s.play(0, int.MAX_VALUE);
 			var st=canal.soundTransform;
-			st.volume=0;
+			if( biblio[i].lbl!="main")
+				st.volume=0;
 			canal.soundTransform=st;
 			sounds.push({s:s,lbl:biblio[i].lbl,canal:canal});
 		}
@@ -42,7 +43,6 @@ public class SoundManager {
 				st.volume=lvl;
 				sounds[i].canal.soundTransform=st;
 				
-				trace( sounds[i].canal.soundTransform.volume );
 				/*
 				var sens = (lvl-sounds[i].lvl)>0:1:-1;
 				
