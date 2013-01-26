@@ -3,58 +3,66 @@
 	import flash.events.*;
 	public class JimLeClapeur extends ControledPersonnage{
 	
-		public var state:String;
-		public var succefullClap=0;
+		public var succesfullClap=0;
+		public var bitches=[];
+		public var girl=null;
 		public function JimLeClapeur() {
 			Main.main.stage.addEventListener( KeyboardEvent.KEY_UP , clap );
-			var netClient:Object = new Object();
-			netClient.onMetaData = function(meta:Object){
-				  duree=meta.duration;
-				  trace(duree);
-				  curseur.addEventListener(Event.ENTER_FRAME, curseurAction);
-			};
-			ns.client=netClient;
-
-			function curseurAction(evt:Event):void {
-				  curseur.x=barreLect.x+ns.time*barreLect.width/duree;
-			}
+			
 		}
 		public var stamp=0;
 		public function clap(e){
-			if( e.keyCode != 34)		//space bar
-				return;
 			
+			if( e.keyCode != 32)		//space bar
+				return;
 			
 			var pos=Main.main.soundMgr.sounds[0].canal.position
 			
 			var T=60/150*1000;
 			
-			if( Math.abs( 0.5-(pos%T)/T ) > 0.1  ){ // pulsation accepté
-				if( new Date().getTime() - stamp < T*1.3 ){
+			if( Math.abs( 0.5-(pos%T)/T ) > 0.35  ){ // pulsation accepté
+				if( new Date().getTime() - stamp < T*2.3 ){
 					stamp=new Date().getTime();
-					succefullClap++;
+					succesfullClap++;
 				}else{
 					stamp=new Date().getTime();
-					succefullClap=1;
+					succesfullClap=1;
 				}
 				oneSuccessFullClap();
 			}else{
 				succesfullClap=0;
 			}
 			
-			if( succesfullClap > 2 )
+			if( !this.girl )
+				succesfullClap=0;
+				
+			if( succesfullClap > 1 )
 				threeSuccessFullClap();
-			
+			trace( succesfullClap );
 		}
-		public function oneSuccessFullClap(){
-			//TODO animate
 		
+		override public function move(e){
+			super.move(e);
+		}
+		
+		public function oneSuccessFullClap(){
+			var b=new burstHalo();
+			this.addChild(b);
+			
+			if( this.girl )
+				this.girl.addChild( new burstHalo() );
+				
+			var i=bitches.length;
+			while(i--)
+				bitches[i].addChild( new burstHalo() );
 		}
 		public function threeSuccessFullClap(){
-			//TODO animate
-		
+			bitches.push( this.girl );
+			this.girl.follow=true;
+			this.girl.Jim=this;
+			this.girl=null;
 		}
-		public function remove(){
+		override public function remove(){
 			Main.main.stage.removeEventListener( KeyboardEvent.KEY_UP , clap );
 		}
 	} 

@@ -58,8 +58,8 @@
 				this.x=rx;
 				this.y=ry;
 			}
-			
-			// updateAnimation();
+			Main.main.decor.update( this );
+			//updateAnimation();
 		}
 		public function remove(){
 			
