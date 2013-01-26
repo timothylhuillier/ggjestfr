@@ -3,8 +3,10 @@
 	import flash.events.*;
 	public class Personnage extends MovieClip{
 	
+		public var follower:Vector.<pnj>; // followers
 		public var last_direction;
 		public var state:String;
+		public var startFollower:Boolean = false;
 		
 		public var direction=0; 		//vecteur directeur
 		public var velocity=0;
@@ -12,10 +14,18 @@
 		public var acceleration=3;
 		public var velocityCap=13;
 		
-		public function Personnage() {
+		public function Personnage(var pos_x:int, var pos_y:int) {
+			v = new Vector.<pnj>();
 			updateAnimation('east', true);
-			direction={x:50,y:50};
+			direction={x:pos_x,y:pos_y};
 			Main.main.stage.addEventListener( Event.ENTER_FRAME , move );
+		}
+		
+		public function addFollower(var follow:pnj)
+		{
+			this.follower.push(follow);
+			startFollower = true;
+			
 		}
 		
 		public function updateAnimation(direction, idle){

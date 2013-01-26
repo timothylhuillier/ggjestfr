@@ -33,7 +33,7 @@ public class Main extends MovieClip{
 			lbl:"crazy stuff with uterus",
 			prepare:function(){
 			
-				var bob=new Bob();
+				var bob=new Bob(w/2, h/2);
 				bob.x=w/2;
 				bob.y=h/2;
 				
