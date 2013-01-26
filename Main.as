@@ -1,4 +1,4 @@
-
+﻿
 package{
 
 	import flash.display.DisplayObject;
@@ -54,7 +54,7 @@ public class Main extends MovieClip{
 				while(i--)
 					addChild( collisions[i].zone );
 				
-				var decor=new Decor( collisions , new Node()  );
+				var decor=new Decor( collisions , new MovieClip() );
 				
 				addChild( bob );
 				addChild( decor );
