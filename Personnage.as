@@ -33,6 +33,7 @@
 			this.gotoAndStop(lbl);
 		}
 		public function impulse(dir){
+		
 			this.direction.x= this.direction.x*velocity + dir.x*acceleration;
 			this.direction.y= this.direction.y*velocity + dir.y*acceleration;
 			
@@ -44,8 +45,6 @@
 			this.velocity=Math.min( l , velocityCap );
 		}
 		public function move(e){
-			
-			
 			
 			this.velocity*=friction;
 			
