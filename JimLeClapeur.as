@@ -11,6 +11,22 @@
 			
 		}
 		public var stamp=0;
+		public var goodOnes=[false,false,false,false,false,false,false];
+		public function queue(b){
+			for( var i=0;i<goodOnes.length-1;i++)
+				goodOnes[i]=goodOnes[i-1];
+			goodOnes[goodOnes.length-1]=b;
+		}
+		public function resetQueue(){
+			goodOnes=[false,false,false,false,false,false,false];
+		}
+		public function validQueue(){
+			var c=0;
+			for( var i=0;i<goodOnes.length;i++)
+				if( goodOnes[i] )
+					c++;
+			return c>4;
+		}
 		public function clap(e){
 			
 			if( e.keyCode != 32)		//space bar
@@ -21,24 +37,24 @@
 			var T=60/150*1000;
 			
 			if( Math.abs( 0.5-(pos%T)/T ) > 0.35  ){ // pulsation accepté
-				if( new Date().getTime() - stamp < T*2.3 ){
+				if( new Date().getTime() - stamp < T*1.2 ){
 					stamp=new Date().getTime();
-					succesfullClap++;
+					queue(true);
 				}else{
 					stamp=new Date().getTime();
-					succesfullClap=1;
+					queue(false);
 				}
 				oneSuccessFullClap();
 			}else{
-				succesfullClap=0;
+				queue(false);
 			}
 			
 			if( !this.girl )
-				succesfullClap=0;
+				resetQueue();
 				
-			if( succesfullClap > 1 )
+			if( validQueue() )
 				threeSuccessFullClap();
-			trace( succesfullClap );
+			
 		}
 		
 		override public function move(e){

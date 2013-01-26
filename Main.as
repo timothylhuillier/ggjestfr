@@ -126,7 +126,7 @@ public class Main extends MovieClip{
 							event : "exit",
 							inner : false,
 							action : function( bob ){
-								//bob.girl=null;
+								bob.girl=null;
 								sm.fade(g.lbl ,0);
 								return true;	// return true -> the movement will not be canceled
 								
@@ -138,6 +138,7 @@ public class Main extends MovieClip{
 						g.y=girls[i].y;
 						girls[i].g=g;
 						girls[i].rond=rond;
+						g.lbl=girls[i].lbl;
 					})();
 				}
 				
