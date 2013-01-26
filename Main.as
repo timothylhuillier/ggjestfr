@@ -128,7 +128,7 @@ public class Main extends MovieClip{
 				stock.bob=bob;
 				
 				Main.main.decor=decor;
-				
+				Main.main.soundMgr=sm;
 			},
 			finish:function(){
 				stock.bob.parent.removeChild( stock.bob );
