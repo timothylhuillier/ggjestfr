@@ -17,6 +17,10 @@ public class Decor extends MovieClip{
 	
 		collisions=collisionLayers; 
 		
+		var i=collisions.length
+		while(i--)
+			this.addChild( collisionLayers[i].zone );
+			
 		this.addChild( visuel );
 	}
 	public function detectCollision( motif ){
@@ -41,26 +45,26 @@ public class Decor extends MovieClip{
 	}
 	public function update( bob ){
 		// lets say the personnage stay at the center
-		
 		var w=Main.main.w,
 			h=Main.main.h;
 		
 		var x = w/2;
 		var y = h/2;
 		
-		var dx = x-bob.x;
-		var dy = y-bob.y;
+		var dx = x-(bob.x);
+		var dy = y-(bob.y);
 		
 		bob.x+=dx;
 		bob.y+=dy;
 		
 		this.x+=dx;
 		this.y+=dy;
-		
-		
 	}
 	public function remove(){
-		
+		var i=collisions.length
+		while(i--)
+			this.removeChild( collisions[i].zone );
+		this.removeChild( visuel );
 	}
 	
 }

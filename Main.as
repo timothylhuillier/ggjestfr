@@ -21,14 +21,16 @@ public class Main extends MovieClip{
 	public static var main;
 	public var decor;
 	
-	public var w=500;
-	public var h=400;
+	public var w=900;
+	public var h=800;
 	
 	public var stock={};
 	
 	public var tableauCursor=0;
 	
-	public var tableaux = [
+	public var soundMgr=0;
+	
+	public var tableaux = [/*
 		{
 			lbl:"crazy stuff with uterus",
 			prepare:function(){
@@ -45,20 +47,15 @@ public class Main extends MovieClip{
 						return false;				// return false -> the movement wil be canceled
 					}
 				},
-				{ 	zone : new MovieClip(),
+				{ 	zone : new tableau1_walls(),
 					event : "enter",
 					inner : false,
 					action : function( bob ){
-						return true;
-						trace("on");
 						nextTableau();
 						return true;	// return true -> the movement will not be canceled
 					}
 				}];
 				
-				var i=collisions.length;
-				while(i--)
-					addChild( collisions[i].zone );
 				
 				var decor=new Decor( collisions , new MovieClip() );
 				
@@ -74,22 +71,30 @@ public class Main extends MovieClip{
 			finish:function(){
 				stock.bob.parent.removeChild( stock.bob );
 				stock.decor.parent.removeChild( stock.decor );
+				Main.main.decor=null;
 				stock.bob=null;
 				stock.decor=null;
 				
 			}
 			
-		},
+		},*/
 		
 		{
 			lbl:"walking on the wood",
 			prepare:function(){
 			
-				var bob=new Bob();
+				var bob=new JimLeClapeur();
 				bob.x=w/2;
 				bob.y=h/2;
 				
 				var sm = new SoundManager();
+				
+				
+				var girls=[
+					{g:null,x:200,y:320,rond:null,lbl:"one"},
+					{g:null,x:550,y:-20,rond:null,lbl:"two"}
+					];
+					
 				
 				var collisions=[
 				{ 	zone : new MovieClip(),			// zone as a sprite
@@ -98,29 +103,53 @@ public class Main extends MovieClip{
 					action : function( bob ){
 						return false;				// return false -> the movement wil be canceled
 					}
-				},
-				{ 	zone : new MovieClip(),
-					event : "enter",
-					inner : false,
-					action : function( bob ){
-						trace("on");
-						sm.fade("two" , 1);
-						return true;	// return true -> the movement will not be canceled
-					}
-				},
-				{ 	zone : new MovieClip(),
-					event : "exit",
-					inner : false,
-					action : function( bob ){
-						trace("on");
-						sm.fade("two" ,0);
-						return true;	// return true -> the movement will not be canceled
-					}
+				}]
+	
+				var i=girls.length;
+				while(i--){
+					(function(){
+						var g=new Girl();
+						var rond=new tableau1_walls();
+						collisions.push(
+						{ 	zone : rond,
+							event : "enter",
+							inner : false,
+							action : function( bob ){
+								bob.girl=g;
+								sm.fade(g.lbl , 1);
+								return true;	// return true -> the movement will not be canceled
+								
+							}
+						} );
+						collisions.push(
+						{ 	zone : rond,
+							event : "exit",
+							inner : false,
+							action : function( bob ){
+								//bob.girl=null;
+								sm.fade(g.lbl ,0);
+								return true;	// return true -> the movement will not be canceled
+								
+							}
+						} );
+						rond.x=girls[i].x;
+						rond.y=girls[i].y;
+						g.x=girls[i].x;
+						g.y=girls[i].y;
+						girls[i].g=g;
+						girls[i].rond=rond;
+					})();
 				}
-				];
+				
 				
 				var decor=new Decor( collisions , new MovieClip()  );
 				
+				var j=girls.length;
+				while(j--){
+					decor.addChild( girls[j].rond );
+					decor.addChild( girls[j].g );
+				}
+					
 				addChild( bob );
 				addChild( decor );
 				
@@ -154,8 +183,6 @@ public class Main extends MovieClip{
 		main=this;
 		
 		nextTableau();
-		
-		//this.addEventListener( "enterFrame" , this.open );
 	}
 	
 }
