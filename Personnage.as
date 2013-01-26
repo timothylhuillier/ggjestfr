@@ -1,8 +1,9 @@
-package {
+﻿package {
 	import flash.display.MovieClip;
 	import flash.events.*;
 	public class Personnage extends MovieClip{
 	
+		public var last_direction;
 		public var state:String;
 		
 		public var direction=0; 		//vecteur directeur
@@ -12,30 +13,24 @@ package {
 		public var velocityCap=10;
 		
 		public function Personnage() {
-			updateAnimation('east');
-			direction={x:0,y:0};
+			updateAnimation('east', true);
+			direction={x:50,y:50};
 			Main.main.stage.addEventListener( Event.ENTER_FRAME , move );
 		}
 		
-		public function updateAnimation($direction){
+		public function updateAnimation(direction, idle){
 			var lbl;
-
-			switch($direction){
-				case 'west': // gauche
-					lbl = 'walk_west';
-				break;
-				case 'south': // haut
-					lbl = 'walk_north';
-				break;
-				case 'east': // droite
-					lbl = 'walk_east';
-				break;
-				case 'north': // bas
-					lbl = 'walk_south';
-				break;
-			}
+			if (direction == 'west') // gauche
+				lbl = 'walk_west';
+			else if (direction == 'south')
+				lbl = 'walk_south';
+			else if (direction == 'east')
+				lbl = 'walk_east';
+			else if (direction == 'north')
+				lbl = 'walk_north';
+			if (idle == true)
+				lbl += '_idle';
 			this.gotoAndStop(lbl);
-			
 		}
 		public function impulse(dir){
 			this.direction.x= this.direction.x*velocity + dir.x*acceleration;
