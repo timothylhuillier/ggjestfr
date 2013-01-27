@@ -123,7 +123,10 @@ public class Main extends MovieClip{
 		{
 			lbl:"walking on the wood",
 			prepare:function(){
-			
+				
+				
+				setTimeout( nextTableau , 100000 );
+				
 				var jim=new JimLeClapeur();
 				
 				var biblio=[
@@ -148,7 +151,6 @@ public class Main extends MovieClip{
 				
 				var collisions=[
 				{ 	zone : new collision_tableau2(),			// zone as a sprite
-				//{ 	zone : new MovieClip(),			// zone as a sprite
 					event : "move",					// the event, "move" , "enter" or "exit"
 					inner : false,					// always initialise at false
 					action : function( jim ){
@@ -215,10 +217,11 @@ public class Main extends MovieClip{
 			},
 			finish:function(){
 				stock.bitches=stock.bob.bitches;
+				
 				var j=stock.girls.length;
 				while(j--){
-					decor.removeChild( stock.girls[j].rond );
-					decor.removeChild( stock.girls[j].g );
+					stock.decor.removeChild( stock.girls[j].rond );
+					stock.decor.removeChild( stock.girls[j].g );
 				}
 				stock.bob.remove();
 				stock.decor.remove();
@@ -230,8 +233,8 @@ public class Main extends MovieClip{
 				stock.decor=null;
 				
 			}
-		}
-		/*{
+		},
+		{
 			lbl:"where i go",
 			prepare:function(){
 			
@@ -296,8 +299,24 @@ public class Main extends MovieClip{
 					decor.addChild(stones[i].rond);
 				}
 				
+				var wm = new whiteMask();
+				decor.addChild( wm );
+				wm.alpha=0;
+				
 				addChild( george );
 				
+				i=george.bitches.length;
+				while(i--){
+					decor.addChild(george.bitches[i]);
+					george.bitches[i].Jim=george;
+					george.bitches[i].follow=true;
+				}
+				
+				var s = new Musique_scene_1_IG();
+				var canal=s.play(0, int.MAX_VALUE);
+				
+				
+				stock.canal=canal;
 				stock.decor=decor;
 				stock.bob=george;
 				
@@ -305,11 +324,26 @@ public class Main extends MovieClip{
 				
 				var tick=0;
 				var sin_tick=-1;
-				var t=[1,0.8,0.6,0.5,0.41,0.33];
+				var t=[1,0.9,0.8,0.7,0.6,0.5,0.4,0.3];
 				var cursor=0;
-				
+				var girlDisappear=0;
 				var last_d=1;
 				var decrease=function(){
+					
+					if( girlDisappear > 0 ){
+						
+						i=george.bitches.length;
+						while(i--){
+							george.bitches[i].alpha=1-girlDisappear/60;
+							george.bitches[i].x+=3;
+							george.bitches[i].follow=false;
+						}
+						
+						girlDisappear++;
+						if( girlDisappear > 60 )
+							removeEventListener(Event.ENTER_FRAME,decrease);
+						return;
+					}
 					
 					if(sin_tick>=0){
 						var s=Math.cos(sin_tick/70*Math.PI*6)*( 1-sin_tick/70 ) / ( 1 + sin_tick/70*3 );
@@ -317,13 +351,15 @@ public class Main extends MovieClip{
 						var d=t[cursor+1] + (t[cursor]-t[cursor+1])*s;
 						
 						cadre.scaleY=cadre.scaleX=fancy_cadre.scaleX=fancy_cadre.scaleY=d;
+						wm.alpha=(1-d)/0.6;
 						
 						/*
-						var r={ x:george.x , y:george.y };
+						var r={ x:george.x +Main.main.decor.x- 988.8  , y:george.y+Main.main.decor.y -792};
 						var l=Math.sqrt( r.x*r.x + r.y*r.y );
 						
-						george.x = george.x*( d - last_d );
-						george.y = george.y*( d - last_d );
+						george.x = 988.8+r.x*( d - last_d );
+						george.y = 792+r.y*( d - last_d );
+						*/
 						
 						last_d=d;
 						sin_tick++;
@@ -331,15 +367,16 @@ public class Main extends MovieClip{
 							sin_tick=-1;
 							
 							cursor++
-							if( cursor+1>t.length)
-								removeEventListener(Event.ENTER_FRAME,decrease);
+							if( cursor+1>=t.length){
+								girlDisappear++;
+							}
 						}
 						
 						
 						
 						tick=0;
 					}
-					if( tick > 160 )
+					if( tick > 60 )
 						sin_tick=0;
 
 					tick++
@@ -350,6 +387,7 @@ public class Main extends MovieClip{
 				addEventListener(Event.ENTER_FRAME,decrease);
 			},
 			finish:function(){
+				stock.canal.stop();
 				stock.bob.remove();
 				stock.decor.remove();
 				Main.main.soundMgr.remove();
@@ -360,7 +398,7 @@ public class Main extends MovieClip{
 				stock.decor=null;
 				
 			}
-		}*/
+		}
 	]
 	
 	public function nextTableau(){

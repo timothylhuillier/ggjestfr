@@ -26,6 +26,7 @@ public class Girl extends Personnage{
 		var a=Math.random()*Math.PI;
 		this.direction={x:Math.cos(a),y:Math.sin(a)};
 	}
+	public var iWillDropUIn=Math.random()*800+800;
 	override public function move(e){
 			
 		if(follow){
@@ -47,6 +48,13 @@ public class Girl extends Personnage{
 						this.y += ab.y/l*3;
 					}
 				}
+			iWillDropUIn--
+			if( iWillDropUIn < 0 ){
+				follow=false;
+				for( i=0; i<Jim.bitches.length ; i ++ )
+					if( Jim.bitches[i] == this )
+						Jim.bitches.splice(i,1);
+			}
 		}
 			
 		//got a wallhack

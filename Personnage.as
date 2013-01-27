@@ -34,9 +34,14 @@
 					lbl = 'walk_south';
 				else
 					lbl = 'walk_north';
-			if( velocity < 0.5 )
+			if( velocity < 1 )
 				lbl += '_idle';
+<<<<<<< HEAD
 			this.gotoAndPlay(lbl);
+=======
+			if( this.currentLabel != lbl )
+				this.gotoAndPlay(lbl);
+>>>>>>> 966cff296d47bc4a5b475bb666e97d052a2272bf
 		}
 		public function impulse(dir){
 		

@@ -21,19 +21,14 @@
 		public function enterF(e){
 			
 			var pos=Main.main.soundMgr.sounds[0].canal.position;
-			var T=60/100*1000;
-			
+			var T=800;
 			if( alo.parent )
 				alo.parent.removeChild(alo);
 			
-			if( (pos%T)/T  < 0.05 || 0.95 < (pos%T)/T )
+			if( (pos%T)/T  < 0.15 || 0.85 < (pos%T)/T )
 				if( this.girl )
 					this.girl.addChild( alo );
 					
-			if( (pos%T)/T  < 0.05 || 0.95 < (pos%T)/T )
-				if( this.girl )
-					this.girl.addChild( alo );
-			
 		}
 		public function resetQueue(){
 			goodOnes=[false,false,false,false,false,false,false];
@@ -52,9 +47,9 @@
 			
 			var pos=Main.main.soundMgr.sounds[0].canal.position
 			
-			var T=60/400*1000;
-			
-			if( new Date().getTime() - stamp < T*5 && Math.abs( 0.5-(pos%T)/T ) > 0.35  ){ // pulsation accepté
+			var T=800;
+			trace( (pos%T)/T );
+			if( new Date().getTime() - stamp < T*5 && ( (pos%T)/T  < 0.25 || 0.75 < (pos%T)/T )  ){ // pulsation accepté
 				stamp=new Date().getTime();
 				queue(true);
 				oneSuccessFullClap();
@@ -66,14 +61,13 @@
 			if( !this.girl )
 				resetQueue();
 				
+				
+			trace( validQueue() );
 			var queuValid=validQueue();
 			Main.main.soundMgr.fade( "main" , 0.5+0.5*queuValid/4 );
 			if( queuValid > 4 )
 				threeSuccessFullClap();
-			trace(queuValid);
 			
-			if( this.girl )
-			threeSuccessFullClap();
 		}
 		
 		override public function move(e){
@@ -99,6 +93,7 @@
 		}
 		override public function remove(){
 			Main.main.stage.removeEventListener( KeyboardEvent.KEY_UP , clap );
+			Main.main.stage.removeEventListener( Event.ENTER_FRAME , enterF );
 		}
 	} 
 }
