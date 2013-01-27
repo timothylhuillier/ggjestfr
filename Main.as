@@ -30,7 +30,7 @@ public class Main extends MovieClip{
 	
 	public var soundMgr=0;
 	
-	public var tableaux = [
+	public var tableaux = [/*
 		{
 			lbl:"crazy stuff with uterus",
 			prepare:function(){
@@ -99,11 +99,14 @@ public class Main extends MovieClip{
 				stock.canal=null;
 			}
 			
-		},
+		},*/
 		{
 			lbl:"walking on the wood",
 			prepare:function(){
-			
+				
+				
+				setTimeout( nextTableau , 20000 );
+				
 				var jim=new JimLeClapeur();
 				
 				var biblio=[
@@ -195,10 +198,11 @@ public class Main extends MovieClip{
 			},
 			finish:function(){
 				stock.bitches=stock.bob.bitches;
+				
 				var j=stock.girls.length;
 				while(j--){
-					decor.removeChild( stock.girls[j].rond );
-					decor.removeChild( stock.girls[j].g );
+					stock.decor.removeChild( stock.girls[j].rond );
+					stock.decor.removeChild( stock.girls[j].g );
 				}
 				stock.bob.remove();
 				stock.decor.remove();
@@ -210,8 +214,8 @@ public class Main extends MovieClip{
 				stock.decor=null;
 				
 			}
-		}
-		/*{
+		},
+		{
 			lbl:"where i go",
 			prepare:function(){
 			
@@ -278,6 +282,15 @@ public class Main extends MovieClip{
 				
 				addChild( george );
 				
+				i=george.bitches.length;
+				while(i--){
+					trace(george.bitches[i]);
+					decor.addChild(george.bitches[i]);
+					george.bitches[i].Jim=george;
+					george.bitches[i].follow=true;
+				}
+				
+				
 				stock.decor=decor;
 				stock.bob=george;
 				
@@ -304,7 +317,7 @@ public class Main extends MovieClip{
 						
 						george.x = george.x*( d - last_d );
 						george.y = george.y*( d - last_d );
-						
+						*/
 						last_d=d;
 						sin_tick++;
 						if( sin_tick > 70 ){
@@ -340,7 +353,7 @@ public class Main extends MovieClip{
 				stock.decor=null;
 				
 			}
-		}*/
+		}
 	]
 	
 	public function nextTableau(){
