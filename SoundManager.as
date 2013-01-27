@@ -36,7 +36,7 @@ public class SoundManager {
 			if( lbl==sounds[i].lbl ){
 				
 				var st=sounds[i].canal.soundTransform;
-				
+				/*
 				var d=lvl-st.volume;
 				var sens=d>0?1:-1;
 				
@@ -46,7 +46,10 @@ public class SoundManager {
 				sounds[i].canal.soundTransform=st;
 				
 				if( nv != lvl )
-					setTimeout( function(){ fade( lbl , lvl ) } , 200);
+					setTimeout( function(){ if( fade ) fade( lbl , lvl ); } , 200);
+				*/
+				st.volume=lvl;
+				sounds[i].canal.soundTransform=st;
 				
 			}
 			

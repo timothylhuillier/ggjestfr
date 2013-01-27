@@ -61,11 +61,13 @@ public class Decor extends MovieClip{
 		this.y+=dy;
 	}
 	public function remove(){
-		var i=collisions.length
+		/*
+		var i=collisions.length;
 		while(i--)
 			this.removeChild( collisions[i].zone );
 		if( visuel )
 			this.removeChild( visuel );
+		*/
 	}
 	
 }
