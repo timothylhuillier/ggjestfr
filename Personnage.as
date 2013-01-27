@@ -36,12 +36,9 @@
 					lbl = 'walk_north';
 			if( velocity < 1 )
 				lbl += '_idle';
-<<<<<<< HEAD
 			this.gotoAndPlay(lbl);
-=======
 			if( this.currentLabel != lbl )
 				this.gotoAndPlay(lbl);
->>>>>>> 966cff296d47bc4a5b475bb666e97d052a2272bf
 		}
 		public function impulse(dir){
 		
@@ -58,11 +55,18 @@
 		
 		public function speedUp()
 		{
-			if (contraction/3 >=3)
-				setTimeout( Main.main.nextTableau , 2000 );
-			this.velocity += 5;
-			contraction++;
-			trace(contraction);
+			if (Main.main.level == 1)
+				{
+					if (contraction/2 >=3)
+						{
+							setTimeout( Main.main.nextTableau , 2000 );
+							Main.main.level++;
+							return;
+						}
+					this.velocity += 5;
+					contraction++;
+					trace(contraction);
+				}
 		}
 		
 		public function move(e){

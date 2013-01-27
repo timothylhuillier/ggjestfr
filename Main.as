@@ -23,6 +23,7 @@ public class Main extends MovieClip{
 	
 	public var w=900;
 	public var h=800;
+	public var level = 1;
 	
 	public var stock={};
 	
@@ -117,6 +118,7 @@ public class Main extends MovieClip{
 				stock.bob=null;
 				stock.decor=null;
 				stock.canal=null;
+				level = 2;
 			}
 			
 		},
