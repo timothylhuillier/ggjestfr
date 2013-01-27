@@ -63,9 +63,9 @@
 			
 			var queuValid=validQueue();
 			Main.main.soundMgr.fade( "main" , 0.5+0.5*queuValid/4 );
-			if( queuValid > 4 )
+			if( queuValid > 3 )
 				threeSuccessFullClap();
-			
+			trace(  queuValid );
 		}
 		
 		override public function move(e){

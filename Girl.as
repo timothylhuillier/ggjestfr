@@ -58,6 +58,7 @@ public class Girl extends Personnage{
 						Jim.bitches.splice(i,1);
 			}
 		}
+		updateAnimation();
 			
 		//got a wallhack
 	}

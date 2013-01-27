@@ -55,7 +55,7 @@
 		
 		public function speedUp()
 		{
-			if (Main.main.level == 1)
+			if (Main.main.tableauCursor == 1)
 				{
 					if (contraction/2 >=3)
 						{
@@ -65,7 +65,6 @@
 						}
 					this.velocity += 5;
 					contraction++;
-					trace(contraction);
 				}
 		}
 		

@@ -31,7 +31,7 @@ public class Main extends MovieClip{
 	
 	public var soundMgr=0;
 	
-	public var tableaux = [
+	public var tableaux = [/*
 		{
 			lbl:"crazy stuff with uterus",
 			prepare:function(){
@@ -52,6 +52,7 @@ public class Main extends MovieClip{
 					inner : false,
 					action : function( bob ){
 						trace("trigger");
+						level++;
 						setTimeout( nextTableau , 20000 );
 						return true;	// return true -> the movement will not be canceled
 					}
@@ -100,6 +101,7 @@ public class Main extends MovieClip{
 				addChild(eaux);
 				addChild(sang);
 				
+				stock.sang=sang;
 				stock.decor=decor;
 				stock.bob=bob;
 				stock.canal=canal;
@@ -113,15 +115,17 @@ public class Main extends MovieClip{
 				stock.decor.remove();
 				stock.bob.parent.removeChild( stock.bob );
 				stock.decor.parent.removeChild( stock.decor );
+				stock.sang.parent.removeChild( stock.sang );
 				stock.canal.stop();
 				Main.main.decor=null;
 				stock.bob=null;
 				stock.decor=null;
+				stock.sang=null;
 				stock.canal=null;
 				level = 2;
 			}
 			
-		},
+		},*/
 		{
 			lbl:"JimtoGeorge",
 			prepare:function(){
@@ -250,7 +254,6 @@ public class Main extends MovieClip{
 				Main.main.soundMgr=null;
 				stock.bob=null;
 				stock.decor=null;
-				
 			}
 		},
 		{
