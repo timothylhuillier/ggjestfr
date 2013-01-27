@@ -36,6 +36,7 @@ public class Main extends MovieClip{
 			prepare:function(){
 			
 				var bob=new Bob();
+				var sang = new le_rouge();
 				
 				var collisions=[
 				{ 	zone : new collision_tableau1(),// zone as a sprite
@@ -53,30 +54,49 @@ public class Main extends MovieClip{
 						setTimeout( nextTableau , 20000 );
 						return true;	// return true -> the movement will not be canceled
 					}
+				},
+				{
+					zone : sang,
+					event : "enter",
+					inner : false,
+					action : function (bob) {
+						trace("sang");
+						if (bob.velocity > 0)
+							{
+								if (bob.velocity < 0.5)
+									bob.velocity = 0;
+								else
+									bob.velocity -= 0.5;
+							}
+						return true;
+					}
+					
 				}];
 				
 				
 				var eaux= new les_eaux();
 				eaux.y=2500;
-				var sang = new le_rouge();
 				var eaux_removed = false;
-				sang.y=2200;
+				sang.y=2100;
 				var descente=function(e){
 					if (eaux_removed == false)
 						eaux.y+=20;
 					else 
 						{
-							sang.y+=0.5;
+							sang.y+=2;
 							trace(sang.y);
 						}
 					if(eaux_removed == false && eaux.y>5000)
 					{
 						eaux_removed = true;
 					}
-					if (sang.y > 3200)
+					if (bob.y < sang.y)
+						trace ("BUMP! : " + bob.y);
+					if (sang.y > 5000)
 					{
 						eaux.removeEventListener(Event.ENTER_FRAME,descente);
 						eaux.parent.removeChild(eaux);
+						sang.parent.removeChild(sang);
 					}
 				};
 				eaux.addEventListener(Event.ENTER_FRAME,descente);
@@ -105,7 +125,7 @@ public class Main extends MovieClip{
 				
 			},
 			finish:function(){
-				sang.parent.removeChild(sang);
+				
 				stock.bob.remove();
 				stock.decor.remove();
 				stock.bob.parent.removeChild( stock.bob );
