@@ -30,7 +30,7 @@ public class Main extends MovieClip{
 	
 	public var soundMgr=0;
 	
-	public var tableaux = [
+	public var tableaux = [/*
 		{
 			lbl:"crazy stuff with uterus",
 			prepare:function(){
@@ -99,7 +99,7 @@ public class Main extends MovieClip{
 				stock.canal=null;
 			}
 			
-		},
+		},*/
 		{
 			lbl:"walking on the wood",
 			prepare:function(){
@@ -143,6 +143,9 @@ public class Main extends MovieClip{
 					(function(){
 						var g=new girls[i].src();
 						var rond=new tableau2_trigger();
+						
+						
+						
 						collisions.push(
 						{ 	zone : rond,
 							event : "enter",
@@ -220,7 +223,7 @@ public class Main extends MovieClip{
 			
 				var george=new George();
 				
-				george.bitches=stock.bitches;
+				george.bitches=stock.bitches||[];
 				stock.bitches=null;
 				
 				var stones=[
@@ -239,20 +242,47 @@ public class Main extends MovieClip{
 						return false;				// return false -> the movement wil be canceled
 					}
 				}]
-	
+				
+				
 				var i=stones.length;
 				while(i--){
 					(function(){
 						var g=new stones[i].src();
 						var j=i;
 						var rond=new collision_stone1();
+						
+						
+						var key=null;
+						var s = new Musique_scene_1_IG();
+						var canal=s.play(0, int.MAX_VALUE);
+						var st=canal.soundTransform;
+						st.volume=0;
+						canal.soundTransform=st;
+						var fading=function(lvl){
+							
+							if( key!= null )
+								clearTimeout(key);
+								
+							var st=canal.soundTransform;
+							var d=lvl-st.volume;
+							var sens=d>0?1:-1;
+							
+							var nv=st.volume+sens*Math.min(Math.abs(d),0.06);
+							st.volume=nv;
+							canal.soundTransform=st;
+							
+							key=null;
+							if( nv != lvl )
+								key = setTimeout( function(){ fading(lvl ); } , 200);
+						}
+						
+						
 						collisions.push(
 						{ 	zone : rond,
 							event : "move",
 							inner : false,
 							action : function( george ){
 								if(!stones[j].touched){
-									trace( j );
 									george.velocityCap-=4.3;
 									stones[j].touched=true;
 								}
@@ -260,6 +290,25 @@ public class Main extends MovieClip{
 								
 							}
 						} );
+						collisions.push(
+						{ 	zone : rond,
+							event : "enter",
+							inner : false,
+							action : function( george ){
+								fading( 1 );
+								return true;	// return true -> the movement will not be canceled
+							}
+						} );
+						collisions.push(
+						{ 	zone : rond,
+							event : "exit",
+							inner : false,
+							action : function( george ){
+								fading( 0 );
+								return true;	// return true -> the movement will not be canceled
+							}
+						} );
+						
 						rond.x=stones[i].x;
 						rond.y=stones[i].y;
 						g.x=stones[i].x;
@@ -293,8 +342,8 @@ public class Main extends MovieClip{
 				}
 				
 				var s = new Musique_scene_1_IG();
-				var canal=s.play(0, int.MAX_VALUE);
-				
+				//var canal=s.play(0, int.MAX_VALUE);
+				var canal=null;
 				
 				stock.canal=canal;
 				stock.decor=decor;

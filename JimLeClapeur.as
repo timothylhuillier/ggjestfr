@@ -17,7 +17,7 @@
 				goodOnes[i-1]=goodOnes[i];
 			goodOnes[goodOnes.length-1]=b;
 		}
-		var alo=new halo();
+		var alo=new hint();
 		public function enterF(e){
 			
 			var pos=Main.main.soundMgr.sounds[0].canal.position;
@@ -61,8 +61,7 @@
 			if( !this.girl )
 				resetQueue();
 				
-				
-			trace( validQueue() );
+			
 			var queuValid=validQueue();
 			Main.main.soundMgr.fade( "main" , 0.5+0.5*queuValid/4 );
 			if( queuValid > 4 )
@@ -75,8 +74,6 @@
 		}
 		
 		public function oneSuccessFullClap(){
-			var b=new burstHalo();
-			this.addChild(b);
 			
 			if( this.girl )
 				this.girl.addChild( new burstHalo() );
