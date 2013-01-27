@@ -19,7 +19,7 @@ public class Girl extends Personnage{
 
 	public var follow=false;
 	public var Jim;
-	public var attachement=100;
+	public var attachement=100+Math.random()*80;
 	public var lbl;
 	public function Girl(){
 		super();
@@ -36,6 +36,17 @@ public class Girl extends Personnage{
 				this.x-=ab.x/l*(l - attachement);
 				this.y-=ab.y/l*(l - attachement);
 			}
+			
+			for( var i=0; i<Jim.bitches.length ; i ++ )
+				if( Jim.bitches[i] != this ){
+					ab={x:this.x-Jim.bitches[i].x,y:this.y-Jim.bitches[i].y};
+					l=Math.sqrt(ab.x*ab.x+ab.y*ab.y);
+					
+					if( l < 100 ){
+						this.x += ab.x/l*3;
+						this.y += ab.y/l*3;
+					}
+				}
 		}
 			
 		//got a wallhack
