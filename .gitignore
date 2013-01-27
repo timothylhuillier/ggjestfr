@@ -6,7 +6,6 @@ bin-release/
 # Other files and folders
 .settings/
 
-ggj.fla
 ggj.swf
 
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
