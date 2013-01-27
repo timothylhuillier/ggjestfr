@@ -1,11 +1,12 @@
-package {
+﻿package {
 	import flash.events.*;
 	public class ControledPersonnage extends Personnage{
 		private var keyDown={
 			up:false,
 			bot:false,
 			left:false,
-			right:false}
+			right:false,
+			space:false}
 		private function upHandler(e)
 		{
 			switch(e.keyCode){
@@ -20,6 +21,9 @@ package {
 				break;
 				case 40: // bas
 					keyDown.bot=false;
+				break;
+				case 32: // space
+					keyDown.space = false;
 				break;
 			}
 		}
@@ -38,6 +42,9 @@ package {
 				case 40: // bas
 					keyDown.bot=true;
 				break;
+				case 32: // space
+					keyDown.space = true;
+				break;
 			}
 		}
 		
@@ -46,6 +53,7 @@ package {
 			if( keyDown.right ) impulse({x:1,y:0});
 			if( keyDown.up  ) impulse({x:0,y:-1});
 			if( keyDown.bot  ) impulse({x:0,y:1});
+			if( keyDown.space) speedUp();
 		}
 		
 		public function ControledPersonnage() {

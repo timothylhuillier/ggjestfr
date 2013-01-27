@@ -1,6 +1,7 @@
 ﻿package {
 	import flash.display.MovieClip;
 	import flash.events.*;
+	import flash.utils.*;
 	public class Personnage extends MovieClip{
 	
 		public var last_direction;
@@ -9,6 +10,7 @@
 		
 		public var direction=0; 		//vecteur directeur
 		public var velocity=0;
+		public var contraction = 0;
 		public var friction=0.7;
 		public var acceleration=5;
 		public var velocityCap=15;
@@ -48,6 +50,16 @@
 			
 			this.velocity=Math.min( l , velocityCap );
 		}
+		
+		public function speedUp()
+		{
+			if (contraction/3 >=3)
+				setTimeout( Main.main.nextTableau , 2000 );
+			this.velocity += 5;
+			contraction++;
+			trace(contraction);
+		}
+		
 		public function move(e){
 			
 			this.velocity*=friction;

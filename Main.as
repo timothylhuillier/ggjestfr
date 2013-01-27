@@ -54,23 +54,6 @@ public class Main extends MovieClip{
 						setTimeout( nextTableau , 20000 );
 						return true;	// return true -> the movement will not be canceled
 					}
-				},
-				{
-					zone : sang,
-					event : "enter",
-					inner : false,
-					action : function (bob) {
-						trace("sang");
-						if (bob.velocity > 0)
-							{
-								if (bob.velocity < 0.5)
-									bob.velocity = 0;
-								else
-									bob.velocity -= 0.5;
-							}
-						return true;
-					}
-					
 				}];
 				
 				
@@ -83,15 +66,17 @@ public class Main extends MovieClip{
 						eaux.y+=20;
 					else 
 						{
-							sang.y+=2;
-							trace(sang.y);
+							sang.y+=1;
 						}
 					if(eaux_removed == false && eaux.y>5000)
 					{
 						eaux_removed = true;
 					}
-					if (bob.y < sang.y)
-						trace ("BUMP! : " + bob.y);
+					if (sang.y - 2520 > 500 && bob.velocityCap > 5)
+						{
+							setTimeout(nextTableau, 30000);
+							bob.velocityCap = 5;
+						}
 					if (sang.y > 5000)
 					{
 						eaux.removeEventListener(Event.ENTER_FRAME,descente);
@@ -99,11 +84,8 @@ public class Main extends MovieClip{
 						sang.parent.removeChild(sang);
 					}
 				};
+				
 				eaux.addEventListener(Event.ENTER_FRAME,descente);
-				
-				
-				
-				
 				
 				var decor=new Decor( collisions , new fond_tableau1() );
 				
