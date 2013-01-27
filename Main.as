@@ -31,7 +31,7 @@ public class Main extends MovieClip{
 	
 	public var soundMgr=0;
 	
-	public var tableaux = [/*
+	public var tableaux = [
 		{
 			lbl:"crazy stuff with uterus",
 			prepare:function(){
@@ -139,7 +139,7 @@ public class Main extends MovieClip{
 				removeChild( stock.bob );
 				stock.bob=null;
 			}
-		},*/
+		},
 		{
 			lbl:"walking on the wood",
 			prepare:function(){
