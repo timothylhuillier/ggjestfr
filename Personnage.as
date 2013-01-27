@@ -34,7 +34,7 @@
 					lbl = 'walk_north';
 			if( velocity < 0.5 )
 				lbl += '_idle';
-			this.gotoAndStop(lbl);
+			this.gotoAndPlay(lbl);
 		}
 		public function impulse(dir){
 		

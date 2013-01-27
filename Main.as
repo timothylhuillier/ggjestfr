@@ -58,14 +58,30 @@ public class Main extends MovieClip{
 				
 				var eaux= new les_eaux();
 				eaux.y=2500;
+				var sang = new le_rouge();
+				var eaux_removed = false;
+				sang.y=2200;
 				var descente=function(e){
-					eaux.y+20;
-					if(eaux.y>5000){
+					if (eaux_removed == false)
+						eaux.y+=20;
+					else 
+						{
+							sang.y+=0.5;
+							trace(sang.y);
+						}
+					if(eaux_removed == false && eaux.y>5000)
+					{
+						eaux_removed = true;
+					}
+					if (sang.y > 3200)
+					{
 						eaux.removeEventListener(Event.ENTER_FRAME,descente);
 						eaux.parent.removeChild(eaux);
 					}
 				};
 				eaux.addEventListener(Event.ENTER_FRAME,descente);
+				
+				
 				
 				
 				
@@ -79,6 +95,7 @@ public class Main extends MovieClip{
 				addChild( decor );
 				addChild( bob );
 				addChild(eaux);
+				addChild(sang);
 				
 				stock.decor=decor;
 				stock.bob=bob;
@@ -88,6 +105,7 @@ public class Main extends MovieClip{
 				
 			},
 			finish:function(){
+				sang.parent.removeChild(sang);
 				stock.bob.remove();
 				stock.decor.remove();
 				stock.bob.parent.removeChild( stock.bob );

@@ -1,4 +1,4 @@
-package {
+﻿package {
 
 	public class Bob extends ControledPersonnage{
 		public var b=0;
