@@ -55,7 +55,7 @@
 		
 		public function speedUp()
 		{
-			if (Main.main.tableauCursor == 1)
+			if (Main.main.tableaux[Main.main.tableauCursor].lbl == "crazy stuff with uterus")
 				{
 					if (contraction/2 >=3)
 						{

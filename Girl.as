@@ -46,8 +46,12 @@ public class Girl extends Personnage{
 					l=Math.sqrt(ab.x*ab.x+ab.y*ab.y);
 					
 					if( l < 100 ){
+					
+						impulse( {x:ab.x/l , y:ab.y/l } );
+						/*
 						this.x += ab.x/l*3;
 						this.y += ab.y/l*3;
+						*/
 					}
 				}
 			iWillDropUIn--

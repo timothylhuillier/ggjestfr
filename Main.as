@@ -125,7 +125,7 @@ public class Main extends MovieClip{
 				level = 2;
 			}
 			
-		},*/
+		},
 		{
 			lbl:"JimtoGeorge",
 			prepare:function(){
@@ -139,13 +139,13 @@ public class Main extends MovieClip{
 				removeChild( stock.bob );
 				stock.bob=null;
 			}
-		},
+		},*/
 		{
 			lbl:"walking on the wood",
 			prepare:function(){
 				
 				
-				setTimeout( nextTableau , 100000 );
+				setTimeout( nextTableau , 30000 );
 				
 				var jim=new JimLeClapeur();
 				
