@@ -48,7 +48,6 @@
 			var pos=Main.main.soundMgr.sounds[0].canal.position
 			
 			var T=800;
-			trace( (pos%T)/T );
 			if( new Date().getTime() - stamp < T*5 && ( (pos%T)/T  < 0.25 || 0.75 < (pos%T)/T )  ){ // pulsation accepté
 				stamp=new Date().getTime();
 				queue(true);

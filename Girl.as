@@ -25,6 +25,8 @@ public class Girl extends Personnage{
 		super();
 		var a=Math.random()*Math.PI;
 		this.direction={x:Math.cos(a),y:Math.sin(a)};
+		this.stop();
+		updateAnimation();
 	}
 	public var iWillDropUIn=Math.random()*800+800;
 	override public function move(e){

@@ -31,7 +31,7 @@ public class Main extends MovieClip{
 	
 	public var soundMgr=0;
 	
-	public var tableaux = [/*
+	public var tableaux = [
 		{
 			lbl:"crazy stuff with uterus",
 			prepare:function(){
@@ -121,7 +121,21 @@ public class Main extends MovieClip{
 				level = 2;
 			}
 			
-		},*/
+		},
+		{
+			lbl:"JimtoGeorge",
+			prepare:function(){
+				stock.bob=new transistionBobtoJim();
+				addChild( stock.bob );
+				stock.bob.x=w/2;
+				stock.bob.y=h/2;
+				setTimeout( nextTableau , 5000 );
+			},
+			finish:function(){
+				removeChild( stock.bob );
+				stock.bob=null;
+			}
+		},
 		{
 			lbl:"walking on the wood",
 			prepare:function(){
@@ -144,10 +158,10 @@ public class Main extends MovieClip{
 				sm.fade( "coeur" , 0.7 );
 				
 				var girls=[
-					{g:null,x:4750,y:480,rond:null,lbl:"petasse",src:Girl},
-					{g:null,x:2450,y:180,rond:null,lbl:"gay",src:Girl},
-					{g:null,x:480,y:980,rond:null,lbl:"coeur",src:Girl},
-					{g:null,x:950,y:-180,rond:null,lbl:"exhibo",src:Girl}
+					{g:null,x:4750,y:480,rond:null,lbl:"petasse",src:Pute},
+					{g:null,x:2450,y:180,rond:null,lbl:"gay",src:Mecton},
+					{g:null,x:480,y:980,rond:null,lbl:"quelconque",src:Fille},
+					{g:null,x:950,y:-180,rond:null,lbl:"exhibo",src:Pervers}
 				];
 					
 				
@@ -237,6 +251,20 @@ public class Main extends MovieClip{
 				stock.bob=null;
 				stock.decor=null;
 				
+			}
+		},
+		{
+			lbl:"JimtoGeorge",
+			prepare:function(){
+				stock.bob=new transitionJimtoGeorge();
+				addChild( stock.bob );
+				stock.bob.x=w/2;
+				stock.bob.y=h/2;
+				setTimeout( nextTableau , 5000 );
+			},
+			finish:function(){
+				removeChild( stock.bob );
+				stock.bob=null;
 			}
 		},
 		{

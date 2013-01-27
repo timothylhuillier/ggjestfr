@@ -31,6 +31,8 @@ public class SoundManager {
 	public function fade( lbl , lvl ){
 		if(lvl>1)
 			lvl=1;
+		if( !sounds )
+			return;
 		var i=sounds.length;
 		while(i--)
 			if( lbl==sounds[i].lbl ){
