@@ -64,7 +64,8 @@ public class Decor extends MovieClip{
 		var i=collisions.length
 		while(i--)
 			this.removeChild( collisions[i].zone );
-		this.removeChild( visuel );
+		if( visuel )
+			this.removeChild( visuel );
 	}
 	
 }

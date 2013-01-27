@@ -8,9 +8,43 @@
 		public var girl=null;
 		public function JimLeClapeur() {
 			Main.main.stage.addEventListener( KeyboardEvent.KEY_UP , clap );
-			
+			Main.main.stage.addEventListener( Event.ENTER_FRAME , enterF );
 		}
 		public var stamp=0;
+		public var goodOnes=[false,false,false,false,false,false,false];
+		public function queue(b){
+			for( var i=1;i<goodOnes.length;i++)
+				goodOnes[i-1]=goodOnes[i];
+			goodOnes[goodOnes.length-1]=b;
+		}
+		var alo=new halo();
+		public function enterF(e){
+			
+			var pos=Main.main.soundMgr.sounds[0].canal.position;
+			var T=60/100*1000;
+			
+			if( alo.parent )
+				alo.parent.removeChild(alo);
+			
+			if( (pos%T)/T  < 0.05 || 0.95 < (pos%T)/T )
+				if( this.girl )
+					this.girl.addChild( alo );
+					
+			if( (pos%T)/T  < 0.05 || 0.95 < (pos%T)/T )
+				if( this.girl )
+					this.girl.addChild( alo );
+			
+		}
+		public function resetQueue(){
+			goodOnes=[false,false,false,false,false,false,false];
+		}
+		public function validQueue(){
+			var c=0;
+			for( var i=0;i<goodOnes.length;i++)
+				if( goodOnes[i] )
+					c++;
+			return c;
+		}
 		public function clap(e){
 			
 			if( e.keyCode != 32)		//space bar
@@ -18,27 +52,28 @@
 			
 			var pos=Main.main.soundMgr.sounds[0].canal.position
 			
-			var T=60/150*1000;
+			var T=60/400*1000;
 			
-			if( Math.abs( 0.5-(pos%T)/T ) > 0.35  ){ // pulsation accepté
-				if( new Date().getTime() - stamp < T*2.3 ){
-					stamp=new Date().getTime();
-					succesfullClap++;
-				}else{
-					stamp=new Date().getTime();
-					succesfullClap=1;
-				}
+			if( new Date().getTime() - stamp < T*5 && Math.abs( 0.5-(pos%T)/T ) > 0.35  ){ // pulsation accepté
+				stamp=new Date().getTime();
+				queue(true);
 				oneSuccessFullClap();
 			}else{
-				succesfullClap=0;
+				stamp=new Date().getTime();
+				queue(false);
 			}
 			
 			if( !this.girl )
-				succesfullClap=0;
+				resetQueue();
 				
-			if( succesfullClap > 1 )
+			var queuValid=validQueue();
+			Main.main.soundMgr.fade( "main" , 0.5+0.5*queuValid/4 );
+			if( queuValid > 4 )
 				threeSuccessFullClap();
-			trace( succesfullClap );
+			trace(queuValid);
+			
+			if( this.girl )
+			threeSuccessFullClap();
 		}
 		
 		override public function move(e){

@@ -1,55 +1,64 @@
 package {
 	import flash.events.*;
 	public class ControledPersonnage extends Personnage{
-		
-		private function idleHandler(e)
+		private var keyDown={
+			up:false,
+			bot:false,
+			left:false,
+			right:false}
+		private function upHandler(e)
 		{
 			switch(e.keyCode){
 				case 37: // gauche
-					updateAnimation('west', true);
+					keyDown.left=false;
 				break;
 				case 38: // haut
-					updateAnimation('north', true);
+					keyDown.up=false;
 				break;
 				case 39: // droite
-					updateAnimation('east', true);
+					keyDown.right=false;
 				break;
 				case 40: // bas
-					updateAnimation('south', true);
+					keyDown.bot=false;
 				break;
 			}
 		}
 		
-		private function keyBoardHandler(e){
+		private function downHandler(e){
 			switch(e.keyCode){
 				case 37: // gauche
-					impulse({x:-1,y:0});
-					updateAnimation('west', false);
+					keyDown.left=true;
 				break;
 				case 38: // haut
-					impulse({x:0,y:-1});
-					updateAnimation('north', false);
+					keyDown.up=true;
 				break;
 				case 39: // droite
-					impulse({x:1,y:0});
-					updateAnimation('east', false);
+					keyDown.right=true;
 				break;
 				case 40: // bas
-					impulse({x:0,y:1});
-					updateAnimation('south', false);
+					keyDown.bot=true;
 				break;
 			}
+		}
+		
+		private function continuous(e){
+			if( keyDown.left ) impulse({x:-1,y:0});
+			if( keyDown.right ) impulse({x:1,y:0});
+			if( keyDown.up  ) impulse({x:0,y:-1});
+			if( keyDown.bot  ) impulse({x:0,y:1});
 		}
 		
 		public function ControledPersonnage() {
 			super();
-			Main.main.stage.addEventListener( KeyboardEvent.KEY_DOWN,keyBoardHandler );
-			Main.main.stage.addEventListener( KeyboardEvent.KEY_UP,idleHandler );
+			Main.main.stage.addEventListener( KeyboardEvent.KEY_DOWN,downHandler );
+			Main.main.stage.addEventListener( KeyboardEvent.KEY_UP,upHandler );
+			Main.main.stage.addEventListener( Event.ENTER_FRAME,continuous );
 		}
 		override public function remove(){
 			super.remove();
-			Main.main.stage.removeEventListener( KeyboardEvent.KEY_DOWN,keyBoardHandler );
-			Main.main.stage.removeEventListener( KeyboardEvent.KEY_UP,idleHandler );
+			Main.main.stage.removeEventListener( KeyboardEvent.KEY_DOWN,downHandler );
+			Main.main.stage.removeEventListener( KeyboardEvent.KEY_UP,upHandler );
+			Main.main.stage.removeEventListener( Event.ENTER_FRAME,continuous );
 		}
 		
 	} 

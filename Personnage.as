@@ -5,30 +5,34 @@
 	
 		public var last_direction;
 		public var state:String;
+		public var startFollower:Boolean = false;
 		
 		public var direction=0; 		//vecteur directeur
 		public var velocity=0;
-		public var friction=0.9;
-		public var acceleration=3;
-		public var velocityCap=13;
+		public var friction=0.7;
+		public var acceleration=5;
+		public var velocityCap=15;
 		
 		public function Personnage() {
-			updateAnimation('east', true);
-			direction={x:50,y:50};
+			direction={x:0,y:0};
+			updateAnimation();
 			Main.main.stage.addEventListener( Event.ENTER_FRAME , move );
 		}
 		
-		public function updateAnimation(direction, idle){
+		
+		public function updateAnimation(){
 			var lbl;
-			if (direction == 'west') // gauche
-				lbl = 'walk_west';
-			else if (direction == 'south')
-				lbl = 'walk_south';
-			else if (direction == 'east')
-				lbl = 'walk_east';
-			else if (direction == 'north')
-				lbl = 'walk_north';
-			if (idle == true)
+			if( Math.abs( direction.x ) > Math.abs( direction.y ) )
+				if( direction.x < -direction.x )
+					lbl = 'walk_west';
+				else
+					lbl = 'walk_east';
+			else
+				if( direction.y > -direction.y )
+					lbl = 'walk_south';
+				else
+					lbl = 'walk_north';
+			if( velocity < 0.5 )
 				lbl += '_idle';
 			this.gotoAndStop(lbl);
 		}
@@ -48,18 +52,15 @@
 			
 			this.velocity*=friction;
 			
-			var rx=this.x;
-			var ry=this.y;
-			
 			this.x+=this.direction.x*this.velocity;
 			this.y+=this.direction.y*this.velocity;
 			
 			if( Main.main.decor && !Main.main.decor.detectCollision( this ) ){
-				this.x=rx;
-				this.y=ry;
+				this.x-=this.direction.x*this.velocity;
+				this.y-=this.direction.y*this.velocity;
 			}
 			Main.main.decor.update( this );
-			//updateAnimation();
+			updateAnimation();
 		}
 		public function remove(){
 			
