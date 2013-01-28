@@ -23,6 +23,8 @@
 		
 		
 		public function updateAnimation(){
+			
+			
 			var lbl;
 			if( Math.abs( direction.x ) > Math.abs( direction.y ) )
 				if( direction.x < -direction.x )
@@ -39,6 +41,7 @@
 			
 			if( this.currentLabel != lbl )
 				this.gotoAndStop(lbl);
+			
 		}
 		public function impulse(dir){
 		
@@ -51,12 +54,14 @@
 			this.direction.y=this.direction.y/l;
 			
 			this.velocity=Math.min( l , velocityCap );
+			
 		}
 		
 		public function speedUp()
 		{
 			if (Main.main.tableaux[Main.main.tableauCursor].lbl == "crazy stuff with uterus")
 				{
+					trace("dont know");
 					if (contraction/2 >=3)
 						{
 							setTimeout( Main.main.nextTableau , 2000 );

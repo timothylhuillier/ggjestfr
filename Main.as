@@ -51,9 +51,8 @@ public class Main extends MovieClip{
 					event : "enter",
 					inner : false,
 					action : function( bob ){
-						trace("trigger");
 						level++;
-						setTimeout( nextTableau , 20000 );
+						setTimeout( nextTableau , 10000 );
 						return true;	// return true -> the movement will not be canceled
 					}
 				}];
@@ -62,32 +61,25 @@ public class Main extends MovieClip{
 				var eaux= new les_eaux();
 				eaux.y=2500;
 				var eaux_removed = false;
-				sang.y=2100;
+				sang.y=2400;
 				var descente=function(e){
 					if (eaux_removed == false)
 						eaux.y+=20;
 					else 
-						{
-							sang.y+=1;
-						}
-					if(eaux_removed == false && eaux.y>5000)
+						if(sang.y<5900)sang.y+=0.75;
+					if(eaux_removed == false && eaux.y>4900)
 					{
 						eaux_removed = true;
 					}
-					if (sang.y - 2520 > 500 && bob.velocityCap > 5)
-						{
-							setTimeout(nextTableau, 30000);
-							bob.velocityCap = 5;
-						}
-					if (sang.y > 5000)
+					
+					if( Main.main.decor.y + sang.y > 3000 && bob.velocityCap > 5)
 					{
-						eaux.removeEventListener(Event.ENTER_FRAME,descente);
-						eaux.parent.removeChild(eaux);
-						sang.parent.removeChild(sang);
+						//setTimeout(nextTableau, 10000);
+						bob.velocityCap = 8;
 					}
 				};
 				
-				eaux.addEventListener(Event.ENTER_FRAME,descente);
+				addEventListener(Event.ENTER_FRAME,descente);
 				
 				var decor=new Decor( collisions , new fond_tableau1() );
 				
@@ -99,9 +91,11 @@ public class Main extends MovieClip{
 				addChild( decor );
 				addChild( bob );
 				addChild(eaux);
-				addChild(sang);
+				decor.addChild(sang);
 				
+				stock.descente=descente;
 				stock.sang=sang;
+				stock.eaux=eaux;
 				stock.decor=decor;
 				stock.bob=bob;
 				stock.canal=canal;
@@ -111,18 +105,20 @@ public class Main extends MovieClip{
 			},
 			finish:function(){
 				
+				
 				stock.bob.remove();
 				stock.decor.remove();
 				stock.bob.parent.removeChild( stock.bob );
 				stock.decor.parent.removeChild( stock.decor );
 				stock.sang.parent.removeChild( stock.sang );
+				stock.eaux.parent.removeChild( stock.eaux );
 				stock.canal.stop();
 				Main.main.decor=null;
 				stock.bob=null;
 				stock.decor=null;
 				stock.sang=null;
 				stock.canal=null;
-				level = 2;
+				removeEventListener(Event.ENTER_FRAME , stock.descente);
 			}
 			
 		},
@@ -133,7 +129,7 @@ public class Main extends MovieClip{
 				addChild( stock.bob );
 				stock.bob.x=w/2;
 				stock.bob.y=h/2;
-				setTimeout( nextTableau , 5000 );
+				setTimeout( nextTableau , 2000 );
 			},
 			finish:function(){
 				removeChild( stock.bob );
@@ -145,7 +141,7 @@ public class Main extends MovieClip{
 			prepare:function(){
 				
 				
-				setTimeout( nextTableau , 30000 );
+				setTimeout( nextTableau , 55000 );
 				
 				var jim=new JimLeClapeur();
 				
@@ -157,6 +153,8 @@ public class Main extends MovieClip{
 					{lbl:"exhibo",src:Musique_scene_2_exhibo}
 				];
 				
+				
+				
 				var sm = new SoundManager( biblio );
 				
 				sm.fade( "coeur" , 0.7 );
@@ -165,7 +163,7 @@ public class Main extends MovieClip{
 					{g:null,x:4750,y:480,rond:null,lbl:"petasse",src:Pute},
 					{g:null,x:2450,y:180,rond:null,lbl:"gay",src:Mecton},
 					{g:null,x:480,y:980,rond:null,lbl:"quelconque",src:Fille},
-					{g:null,x:950,y:-180,rond:null,lbl:"exhibo",src:Pervers}
+					{g:null,x:950,y:-380,rond:null,lbl:"exhibo",src:Pervers}
 				];
 					
 				
@@ -297,6 +295,9 @@ public class Main extends MovieClip{
 				}]
 				
 				
+				sdoun = new Musique_scene_3_vieux();
+				sdoun.play(0, int.MAX_VALUE);
+				
 				var i=stones.length;
 				while(i--){
 					(function(){
@@ -336,7 +337,7 @@ public class Main extends MovieClip{
 							inner : false,
 							action : function( george ){
 								if(!stones[j].touched){
-									george.velocityCap-=4.3;
+									george.velocityCap-=2.3;
 									stones[j].touched=true;
 								}
 								return false;	// return true -> the movement will not be canceled
@@ -394,15 +395,14 @@ public class Main extends MovieClip{
 					george.bitches[i].follow=true;
 				}
 				
-				var s = new Musique_scene_1_IG();
-				//var canal=s.play(0, int.MAX_VALUE);
-				var canal=null;
 				
-				stock.canal=canal;
+				
 				stock.decor=decor;
 				stock.bob=george;
 				
 				Main.main.decor=decor;
+				
+				var sdoun=null;
 				
 				var tick=0;
 				var sin_tick=-1;
@@ -420,6 +420,7 @@ public class Main extends MovieClip{
 							george.bitches[i].x+=3;
 							george.bitches[i].follow=false;
 						}
+						
 						
 						girlDisappear++;
 						if( girlDisappear > 60 )

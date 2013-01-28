@@ -4,6 +4,7 @@ package {
 		public var bitches=[];
 		public function George() {
 			super();
+			velocityCap=5;
 		}
 		override public function move(e){
 			super.move(null);

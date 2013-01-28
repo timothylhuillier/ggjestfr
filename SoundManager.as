@@ -52,7 +52,7 @@ public class SoundManager {
 				*/
 				st.volume=lvl;
 				sounds[i].canal.soundTransform=st;
-				
+				trace( "volume "+lbl+"  "+sounds[i].canal.soundTransform.volume );
 			}
 			
 	}

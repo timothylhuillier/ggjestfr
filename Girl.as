@@ -27,6 +27,7 @@ public class Girl extends Personnage{
 		this.direction={x:Math.cos(a),y:Math.sin(a)};
 		this.stop();
 		updateAnimation();
+		state="g";
 	}
 	public var iWillDropUIn=Math.random()*800+800;
 	override public function move(e){
@@ -35,10 +36,9 @@ public class Girl extends Personnage{
 			var ab={x:this.x-Jim.x+Main.main.decor.x,y:this.y-Jim.y+Main.main.decor.y};
 			var l=Math.sqrt(ab.x*ab.x+ab.y*ab.y);
 			
-			if( l > attachement ){
-				this.x-=ab.x/l*(l - attachement);
-				this.y-=ab.y/l*(l - attachement);
-			}
+			if( l > attachement )
+				impulse( {x:-ab.x/l , y:-ab.y/l } );
+			
 			
 			for( var i=0; i<Jim.bitches.length ; i ++ )
 				if( Jim.bitches[i] != this ){
@@ -47,23 +47,28 @@ public class Girl extends Personnage{
 					
 					if( l < 100 ){
 					
-						impulse( {x:ab.x/l , y:ab.y/l } );
-						/*
-						this.x += ab.x/l*3;
-						this.y += ab.y/l*3;
-						*/
+						impulse( {x:-ab.x/l , y:-ab.y/l } );
+						
+						
 					}
 				}
 			iWillDropUIn--
-			if( iWillDropUIn < 0 ){
+			if( iWillDropUIn < 0 && false ){
 				follow=false;
 				for( i=0; i<Jim.bitches.length ; i ++ )
 					if( Jim.bitches[i] == this )
 						Jim.bitches.splice(i,1);
 			}
 		}
-		updateAnimation();
+		
+		
+		this.velocity*=friction;
 			
+		this.x+=this.direction.x*this.velocity;
+		this.y+=this.direction.y*this.velocity;
+		
+		updateAnimation();
+		
 		//got a wallhack
 	}
 }
